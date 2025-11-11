@@ -5,50 +5,80 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 #include model libraries
-from sklearn.tree import DecisionTreeClassifier, plot_tree
-from sklearn.naive_bayes import GaussianNB
+from sklearn.tree import DecisionTreeClassifier, export_text
+from sklearn.neighbors import KNeighborsClassifier
 
 #include test and accuracy libraries
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import accuracy_score
+from sklearn.metrics import confusion_matrix, accuracy_score, ConfusionMatrixDisplay
 
-#gett data from csv
+#min-max norm function
+def min_max_normalization(x, old_min, old_max, new_min, new_max):
+    return ((x - old_min) / (old_max - old_min) * (new_max - new_min) + new_min)
+
+#get data from csv
 df = pd.read_csv('kdl.csv')
 
 #split data into dependent/independent variables
 y = df["move"]
 df.drop("move", axis=1, inplace=True)
+df = pd.get_dummies(df, columns=['game_state'], prefix='state', dtype=int)
+for i in df.columns[df.columns.str.startswith('state_')]:
+    lst = df[i].to_list()
+    lst = [min_max_normalization(x, 0, 1, 0, 255) for x in lst]
+    df[i] = pd.DataFrame(lst)
+
+#min-max norm - kirby_x
+lst = df["kirby_x"].to_list()
+lst = [min_max_normalization(x, 0, 65535, 0, 255) for x in lst]
+df["kirby_x"] = pd.DataFrame(lst)
+
+#min-max norm - kirby_y
+lst = df["kirby_y"].to_list()
+lst = [min_max_normalization(x, 0, 65535, 0, 255) for x in lst]
+df["kirby_y"] = pd.DataFrame(lst)
+
 X = df
-columns = df.columns.to_list()
-columns.append("move")
 
-
-#split data into test/traiing (1/3 - test, 2/3 - training)
+#split data into test/training (1/3 - test, 2/3 - training)
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
 
-clf = DecisionTreeClassifier(random_state=42) # Initialize the classifier
+#Found max_depth in separate program
+clf = DecisionTreeClassifier(random_state=42, max_depth=17) # Initialize the classifier
 clf.fit(X_train, y_train) # Train the classifier
 y_pred = clf.predict(X_test) # Make predictions on the test set
 accuracy = accuracy_score(y_test, y_pred) # Calculate accuracy
-print(f"DT Accuracy: {accuracy:.2f}")
 
-'''
-gnb = GaussianNB() # Initialize the classifier
-gnb.fit(X_train, y_train) # Train the classifier
-y_pred = gnb.predict(X_test) # Make predictions on the test set
+#display confusion matrix
+fig, ax = plt.subplots(figsize=(200, 200))
+disp = ConfusionMatrixDisplay(confusion_matrix=confusion_matrix(y_test, y_pred), display_labels=y.unique())
+disp.plot(cmap=plt.cm.Blues,ax=ax)
+disp.ax_.set_xticks([])
+plt.title('Decision Tree - Confusion Matrix')
+plt.show()
+
+#display model accuracy
+print(f"DT Accuracy: {accuracy:.2f}")
+print()
+
+#Found K in separate program
+knn = KNeighborsClassifier(n_neighbors=11) # Initialize the classifier
+knn.fit(X_train, y_train) # Train the classifier
+y_pred = knn.predict(X_test) # Make predictions on the test set
 accuracy = accuracy_score(y_test, y_pred) # Calculate accuracy
-print(f"NB Accuracy: {accuracy:.2f}")
-'''
+
+#display confusion matrix
+fig, ax = plt.subplots(figsize=(200, 200))
+disp = ConfusionMatrixDisplay(confusion_matrix=confusion_matrix(y_test, y_pred), display_labels=y.unique())
+disp.plot(cmap=plt.cm.Reds,ax=ax)
+disp.ax_.set_xticks([])
+plt.title('k-NN - Confusion Matrix')
+plt.show()
+
+#display model accuracy
+print(f"KNN Accuracy: {accuracy:.2f}")
+print()
 
 #Display Decision Tree
-plt.figure(figsize=(500, 500)) # Adjust figure size for better visualization
-plot_tree(clf, 
-          feature_names=columns, 
-          class_names=y.unique(),
-          filled=True, 
-          rounded=True,
-          fontsize=10)
-plt.title("Decision Tree Visualization")
-plt.savefig("Decision_Tree.png")
-plt.close()
-print("DONE")
+print("DECISION TREE:")
+print(export_text(clf, feature_names = df.columns.to_list()))
