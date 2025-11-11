@@ -69,7 +69,7 @@ print(f"Best max_depth: {param+1}\n")
 #Find best parameter: k
 train_accuracy = 1
 test_accuracy = 0
-param = 11 #good starting point
+param = 3 #good starting point
 
 while(abs(train_accuracy - test_accuracy) > 0.05 or param == 100):
     knn = KNeighborsClassifier(n_neighbors=param) # Initialize the classifier

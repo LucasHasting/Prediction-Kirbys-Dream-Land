@@ -62,7 +62,7 @@ print(f"DT Accuracy: {accuracy:.2f}")
 print()
 
 #Found K in separate program
-knn = KNeighborsClassifier(n_neighbors=11) # Initialize the classifier
+knn = KNeighborsClassifier(n_neighbors=7) # Initialize the classifier
 knn.fit(X_train, y_train) # Train the classifier
 y_pred = knn.predict(X_test) # Make predictions on the test set
 accuracy = accuracy_score(y_test, y_pred) # Calculate accuracy
