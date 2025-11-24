@@ -1,3 +1,11 @@
+#Name:          Lucas Hasting
+#Class:         DA 460
+#Date:          12/7/2025
+#Instructor:    Dr. Imbrogno
+#Description:   Course Project - Build/Test models for Kirby's Dream Land
+#Sources:       ChatGPT was used for syntax
+#               https://scikit-learn.org/stable/api/index.html
+
 #include data wrangling library
 import pandas as pd
 
@@ -51,7 +59,7 @@ accuracy = accuracy_score(y_test, y_pred) # Calculate accuracy
 
 #display confusion matrix
 fig, ax = plt.subplots(figsize=(200, 200))
-disp = ConfusionMatrixDisplay(confusion_matrix=confusion_matrix(y_test, y_pred), display_labels=y.unique())
+disp = ConfusionMatrixDisplay(confusion_matrix=confusion_matrix(y_test, y_pred), display_labels=sorted(y.unique()))
 disp.plot(cmap=plt.cm.Blues,ax=ax)
 disp.ax_.set_xticks([])
 plt.title('Decision Tree - Confusion Matrix')
@@ -61,15 +69,15 @@ plt.show()
 print(f"DT Accuracy: {accuracy:.2f}")
 print()
 
-#Found K in separate program
-knn = KNeighborsClassifier(n_neighbors=7) # Initialize the classifier
+#found K in separate program
+knn = KNeighborsClassifier(n_neighbors=7,metric='euclidean') # Initialize the classifier
 knn.fit(X_train, y_train) # Train the classifier
 y_pred = knn.predict(X_test) # Make predictions on the test set
 accuracy = accuracy_score(y_test, y_pred) # Calculate accuracy
 
 #display confusion matrix
 fig, ax = plt.subplots(figsize=(200, 200))
-disp = ConfusionMatrixDisplay(confusion_matrix=confusion_matrix(y_test, y_pred), display_labels=y.unique())
+disp = ConfusionMatrixDisplay(confusion_matrix=confusion_matrix(y_test, y_pred), display_labels=sorted(y.unique()))
 disp.plot(cmap=plt.cm.Reds,ax=ax)
 disp.ax_.set_xticks([])
 plt.title('k-NN - Confusion Matrix')
@@ -79,6 +87,6 @@ plt.show()
 print(f"KNN Accuracy: {accuracy:.2f}")
 print()
 
-#Display Decision Tree
+#display Decision Tree
 print("DECISION TREE:")
 print(export_text(clf, feature_names = df.columns.to_list()))
