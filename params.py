@@ -1,3 +1,12 @@
+#Name:          Lucas Hasting
+#Class:         DA 460
+#Date:          12/7/2025
+#Instructor:    Dr. Imbrogno
+#Description:   Parameter Search for models.py
+#Sources:       ChatGPT was used for syntax
+#               https://scikit-learn.org/stable/api/index.html
+#               https://mlbenchmarks.org/04-holdout-method.html
+
 #include data wrangling library
 import pandas as pd
 
@@ -15,6 +24,9 @@ from sklearn.metrics import accuracy_score
 #min-max norm function
 def min_max_normalization(x, old_min, old_max, new_min, new_max):
     return ((x - old_min) / (old_max - old_min) * (new_max - new_min) + new_min)
+
+#constant for generalization gap threshold
+GG_THRESHOLD = 0.05
 
 #get data from csv
 df = pd.read_csv('kdl.csv')
@@ -50,13 +62,13 @@ train_accuracy = 1
 test_accuracy = 0
 param = 20 #good starting point
 
-while(abs(train_accuracy - test_accuracy) > 0.05 or param == 0):
+while(abs(train_accuracy - test_accuracy) > GG_THRESHOLD or param == 0):
     clf = DecisionTreeClassifier(random_state=42, max_depth=param) # Initialize the classifier
     clf.fit(X_train, y_train) # Train the classifier
     y_pred = clf.predict(X_test) # Make predictions on the test set
     accuracy = accuracy_score(y_test, y_pred) # Calculate accuracy
 
-    #CHECK FOR OVERFITTING
+    #check for overfitting using the generalization gap
     y_train_pred = clf.predict(X_train)
     y_test_pred = clf.predict(X_test)
     train_accuracy = accuracy_score(y_train, y_train_pred)
@@ -71,13 +83,13 @@ train_accuracy = 1
 test_accuracy = 0
 param = 3 #good starting point
 
-while(abs(train_accuracy - test_accuracy) > 0.05 or param == 100):
-    knn = KNeighborsClassifier(n_neighbors=param) # Initialize the classifier
+while(abs(train_accuracy - test_accuracy) > GG_THRESHOLD or param == 100):
+    knn = KNeighborsClassifier(n_neighbors=param,metric='euclidean') # Initialize the classifier
     knn.fit(X_train, y_train) # Train the classifier
     y_pred = knn.predict(X_test) # Make predictions on the test set
     accuracy = accuracy_score(y_test, y_pred) # Calculate accuracy
 
-    #CHECK FOR OVERFITTING
+    #check for overfitting using the generalization gap
     y_train_pred = knn.predict(X_train)
     y_test_pred = knn.predict(X_test)
     train_accuracy = accuracy_score(y_train, y_train_pred)

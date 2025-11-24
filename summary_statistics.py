@@ -1,3 +1,10 @@
+#Name:          Lucas Hasting
+#Class:         DA 460
+#Date:          12/7/2025
+#Instructor:    Dr. Imbrogno
+#Description:   Course Project - Build/Test models for Kirby's Dream Land
+#Sources:       ChatGPT was used for syntax
+
 #import libraries
 import pandas as pd
 
@@ -11,7 +18,7 @@ for i in range(40):
     for j in range(4):
         columns.append(f"screen{i+1}_{j}")
 
-#run summary stats on screen only data - quantative
+#run summary stats on screen only data - numeric
 print(df[columns].stack().describe(), end='\n')
 print("Name: Screen Data", end='\n\n')
 
@@ -22,23 +29,23 @@ for i in range(41):
     for j in range(4):
         columns.append(f"tile{i+1}_{j}")
 
-#run summary stats on tile only data - quantative
+#run summary stats on tile only data - numeric
 print(df[columns].stack().describe(), end='\n')
 print("Name: Tile Data", end='\n\n')
 
-#run summary stats on kirby's scroll x-value data - quantative
+#run summary stats on kirby's scroll x-value data - numeric
 print(df["kirby_x_scrol"].describe(), end='\n\n')
 
-#run summary stats on kirby's scroll y-value data - quantative
+#run summary stats on kirby's scroll y-value data - numeric
 print(df["kirby_y_scrol"].describe(), end='\n\n')
 
-#run summary stats on kirby's x-value data - quantative
+#run summary stats on kirby's x-value data - numeric
 print(df["kirby_x"].describe(), end='\n\n')
 
-#run summary stats on kirby's y-value data - quantative
+#run summary stats on kirby's y-value data - numeric
 print(df["kirby_y"].describe(), end='\n\n')
 
-#run summary stats on boss health data - quantative
+#run summary stats on boss health data - numeric
 print(df["boss_health"].describe(), end='\n\n')
 
 #run summary stats on game state data - nominal

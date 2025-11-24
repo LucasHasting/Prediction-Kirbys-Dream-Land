@@ -1,6 +1,13 @@
+#Name:          Lucas Hasting
+#Class:         DA 460
+#Date:          12/7/2025
+#Instructor:    Dr. Imbrogno
+#Description:   Course Project - Build/Test models for Kirby's Dream Land
+#Sources:       ChatGPT was used for syntax
+#               https://retro.readthedocs.io/en/latest/index.html
+
 #import libraries
 import retro
-import random
 import time
 import keyboard
 import pandas as pd
@@ -30,25 +37,7 @@ INPUTS = {
     "B-RIGHT": 13
 }
 
-#create map of positions in action array to input
-INVERSE_INPUTS = {
-    8: "A",
-    0: "B",
-    4: "UP",
-    5: "DOWN",
-    6: "LEFT",
-    7: "RIGHT",
-    -1: "NONE",
-    1: "DOWN-LEFT",
-    9: "DOWN-RIGHT",
-    2: "UP-LEFT",
-    3: "UP-RIGHT",
-    10: "A-LEFT",
-    11: "A-RIGHT",
-    12: "B-LEFT",
-    13: "B-RIGHT"
-}
-
+#function used to make an action in the emulator
 def make_action(enter):
     action = [0] * 9
     if(INPUTS[enter] == 1):
@@ -81,7 +70,7 @@ def make_action(enter):
         action[INPUTS[enter]] = 1
     return action, enter
 
-#get all the screen data (there is alot)
+#get all the screen/tile data (there is alot)
 def load_other_data(info,n,typ):
     data = []
     for i in range(n):
@@ -103,6 +92,7 @@ def load_data(info, move):
 
     return [*screen_data, *tile_data, game_state, boss_health, kirby_y, kirby_y_scrol, kirby_x_scrol, kirby_x, move]
 
+#write the data to a csv file
 def write_to_csv(data, filename):
     #create column names
     column = []
@@ -118,6 +108,7 @@ def write_to_csv(data, filename):
     column += ["game_state", "boss_health", "kirby_y", "kirby_y_scrol"]
     column += ["kirby_x_scrol", "kirby_x", "move"]
 
+    #save file
     df = pd.DataFrame(data, columns=column)
     df.to_csv(filename, index=False)
 
