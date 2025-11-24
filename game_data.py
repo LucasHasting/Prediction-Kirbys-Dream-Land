@@ -2,7 +2,8 @@
 #Class:         DA 460
 #Date:          12/7/2025
 #Instructor:    Dr. Imbrogno
-#Description:   Course Project - Build/Test models for Kirby's Dream Land
+#Description:   Course Project - Record game data and movements made by the player of Kirby's Dream Land
+#               - q to quit, z = a, x = b, arrow keys to move
 #Sources:       ChatGPT was used for syntax
 #               https://retro.readthedocs.io/en/latest/index.html
 

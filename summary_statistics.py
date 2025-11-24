@@ -2,7 +2,7 @@
 #Class:         DA 460
 #Date:          12/7/2025
 #Instructor:    Dr. Imbrogno
-#Description:   Course Project - Build/Test models for Kirby's Dream Land
+#Description:   Get summary stats of kdl.csv file
 #Sources:       ChatGPT was used for syntax
 
 #import libraries

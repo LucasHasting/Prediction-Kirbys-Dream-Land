@@ -1,9 +1,9 @@
-'''
-Name: Lucas Hasting
-Date: 11/20/2024
-
-Source: https://datacrystal.tcrf.net/wiki/Kirby%27s_Dream_Land/RAM_map
-'''
+#Name:          Lucas Hasting
+#Class:         DA 460
+#Date:          12/7/2025
+#Instructor:    Dr. Imbrogno
+#Description:   Setup json file that contains memory address of interest
+#Sources:       https://datacrystal.tcrf.net/wiki/Kirby%27s_Dream_Land/RAM_map
 
 screen = 49152 # screen begining address
 
