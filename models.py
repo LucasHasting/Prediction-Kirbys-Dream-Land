@@ -51,6 +51,9 @@ X = df
 #split data into test/training (1/3 - test, 2/3 - training)
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
 
+#get count of train/test:
+print(f"\n\nsize of train: {len(X_train)}, size of test: {len(X_test)}\n\n")
+
 #Found max_depth in separate program
 clf = DecisionTreeClassifier(random_state=42, max_depth=17) # Initialize the classifier
 clf.fit(X_train, y_train) # Train the classifier
@@ -62,7 +65,7 @@ fig, ax = plt.subplots(figsize=(200, 200))
 disp = ConfusionMatrixDisplay(confusion_matrix=confusion_matrix(y_test, y_pred), display_labels=sorted(y.unique()))
 disp.plot(cmap=plt.cm.Blues,ax=ax)
 disp.ax_.set_xticks([])
-plt.title('Decision Tree - Confusion Matrix')
+plt.title('Figure 3: Decision Tree - Confusion Matrix')
 plt.show()
 
 #display model accuracy
@@ -80,7 +83,7 @@ fig, ax = plt.subplots(figsize=(200, 200))
 disp = ConfusionMatrixDisplay(confusion_matrix=confusion_matrix(y_test, y_pred), display_labels=sorted(y.unique()))
 disp.plot(cmap=plt.cm.Reds,ax=ax)
 disp.ax_.set_xticks([])
-plt.title('k-NN - Confusion Matrix')
+plt.title('Figure 4: k-NN - Confusion Matrix')
 plt.show()
 
 #display model accuracy
