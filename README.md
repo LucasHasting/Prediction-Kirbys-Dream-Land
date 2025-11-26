@@ -1,14 +1,22 @@
 # Prediction Kirby's Dream Land
 
+STILL A WIP
+
 ## Project Overview
 For this project, I build models taught in DA 460 - Predictive Analytics (at the Univeristy of North Alabama) to predict what move someone should make when playing Kirby's Dream Land at any given time. A description of the files found in this project are shown below:
 
 | File/Folder             | Description                                                                      |
 |-------------------------|----------------------------------------------------------------------------------|
-| project.py              | The driver of the program                                                        |
-| get_data.py             | Program was used to generate the data.json in the KirbysDreamLand-GameBoy Folder |
 | KirbysDreamLand-GameBoy | The integrated game KirbysDreamLand                                              |
-| data                    | This folder is where all the model data and recordings are stored                |
+| DA_460_Project.pdf              | The paper for the course project                                                        |
+| DA_460_Project.zip            | LaTeX source of the paper |
+| game_data.py                    | python file to create kdl.csv                |
+| get_data.py                    | python file to data.json used in KirbysDreamLand-GameBoy                 |
+| index.html                    | html file containing the decision tree, it can be viewed [here]()                |
+| kdl_csv.zip                    | zip file that contains kdl.csv (the data used in the project)                |
+| models.py                   | python program to build/test models                |
+| params.py                   | python program to find parameters for the  models                |
+| summary_statistics.py                    | python program to output summary statistics of the data                |
 
 ## Build Instructions
 
